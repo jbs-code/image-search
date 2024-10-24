@@ -20,18 +20,6 @@ const getEndpoint = (what) => {
   endpoint.textContent = `Endpoint: ${link}`;
 }
 
-const handleError = (message) => {
-  endpoint.textContent = message;
-}
-
-inputSearch.addEventListener('input', () => {
-  getEndpoint('search');
-});
-
-inputPage.addEventListener('input', () => {
-  getEndpoint('search');
-});
-
 const isLoadind = () => {
   output.textContent = '';
   const loading = document.createElement('h3');
@@ -45,6 +33,18 @@ const isLoadindEnd = () => {
   loading.remove();
 }
 
+const handleError = (message) => {
+  endpoint.textContent = message;
+}
+
+inputSearch.addEventListener('input', () => {
+  getEndpoint('search');
+});
+
+inputPage.addEventListener('input', () => {
+  getEndpoint('search');
+});
+
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   if (inputSearch.value === '') {
@@ -53,7 +53,7 @@ form.addEventListener('submit', async (e) => {
   }
 
   isLoadind();
-  const res = await fetch(`/search?q=${e.target.search.value}`);
+  const res = await fetch(`${position}/search?q=${e.target.search.value}`);
   const data = await res.json();
   isLoadindEnd();
 
@@ -64,7 +64,7 @@ form.addEventListener('submit', async (e) => {
 
 btnRecent.addEventListener('click', async () => {
   isLoadind();
-  const res = await fetch('/recent-search');
+  const res = await fetch(`${position}/recent-search`);
   const data = await res.json();
   isLoadindEnd();
 
